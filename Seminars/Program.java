@@ -1,12 +1,8 @@
 package Seminars;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import Seminars.Units.BaseHero;
 import Seminars.Units.Crossbowman;
 import Seminars.Units.Magician;
+import Seminars.Units.Peasant;
 import Seminars.Units.Priest;
 import Seminars.Units.Robber;
 import Seminars.Units.Sniper;
@@ -32,5 +28,8 @@ public class Program {
 
         Spearman spearman1 = new Spearman();
         System.out.println(spearman1.getInfo());
+
+        Peasant peasant1 = new Peasant();
+        System.out.println(peasant1.getInfo());
     }
 }
