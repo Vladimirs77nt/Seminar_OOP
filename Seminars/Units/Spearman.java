@@ -2,22 +2,20 @@
 
 package Seminars.Units;
 
-public class Spearman extends InfantryClass {
-
-    public Spearman(int hp, int maxHp, int speed, int damage, int power) {
-        super(hp, maxHp, speed, damage, power);
-    }
+public class Spearman extends InfantryClass implements HeroInterface{
 
     public Spearman() {
-        super(70, 100, 5, 15, 5);
+        super(70, 100, 6, 15, 20);
     }
 
-    /**
-     * Атака копьем!
-     * @param target
-     */
-    public void Attack(BaseHero target) {
-        int damage = BaseHero.r.nextInt(10, 20);
-        target.GetDamage(damage);
+    @Override
+    public String getInfo() {
+        return String.format(">> Копейщик %-11s (id %-3d)  (Hp: %d  Speed: %d,  Damage: %d)",
+                super.name, super.id, super.hp, super.speed, super.damage);
+    }
+
+    @Override
+    public void step() {
+        System.out.printf("Копейщик %s сделал шаг...\n", super.name);
     }
 }

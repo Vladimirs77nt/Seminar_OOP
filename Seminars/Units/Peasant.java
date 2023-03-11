@@ -1,19 +1,21 @@
-// КРЕСТЬЯНИН - потомок класса работников WORKER
+// КРЕСТЬЯНИН - пока данный класс не имеет промежуточного подкласса, он сразу потомок класса BaseHero
 
 package Seminars.Units;
 
-public class Peasant  extends BaseHero {
-
-    public Peasant(int hp, int maxHp, int speed, int damage) {
-        super(hp, maxHp, speed, damage);
-    } 
+public class Peasant extends BaseHero implements HeroInterface{
 
     public Peasant() {
-        super(50, 50, 5, 0);
+        super(40, 50, 5, 0);
     } 
 
-    // методы выполнения какой-то работы
-    public void Work() {
-        int work = BaseHero.r.nextInt(1, 10);
+    @Override
+    public String getInfo() {
+        return String.format(">> Крестьянин %-9s (id %-3d)  (Hp: %d  Speed: %d,  Damage: %d)",
+                super.name, super.id, super.hp, super.speed, super.damage);
+    }
+
+    @Override
+    public void step() {
+        System.out.printf("Крестьянин %s сделал шаг...\n", super.name);
     }
 }

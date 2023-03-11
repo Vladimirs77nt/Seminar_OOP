@@ -1,5 +1,9 @@
 package Seminars;
 
+import java.util.ArrayList;
+import java.util.Random;
+
+import Seminars.Units.BaseHero;
 import Seminars.Units.Crossbowman;
 import Seminars.Units.Magician;
 import Seminars.Units.Peasant;
@@ -11,25 +15,60 @@ import Seminars.Units.Spearman;
 public class Program {
     public static void main(String[] args) {
 
-        Magician magician1 = new Magician();
-        System.out.println(magician1.getInfo());
+        // создаем команду №1 и выводим список в терминал
+        ArrayList<BaseHero> team1 = new ArrayList<>();
+        for (int i = 0; i < 10; i++)
+            team1.add(createRandomHero());
+        System.out.println("--- Команда №1 ---");
+        printTeam(team1);
 
-        Crossbowman crossbowman1 = new Crossbowman();
-        System.out.println(crossbowman1.getInfo());
+        // создаем команду №2 и выводим список в терминал
+        System.out.println();
+        ArrayList<BaseHero> team2 = new ArrayList<>();
+        for (int i = 0; i < 10; i++)
+            team2.add(createRandomHero());
+        System.out.println("--- Команда №2 ---");
+        printTeam(team2);
 
-        Priest priest1 = new Priest();
-        System.out.println(priest1.getInfo());
+        // тестируем на 5 случайных персонажах метод .step()
+        System.out.println();
+        System.out.println("--- тестирование .step() ---");
+        for (int i = 0; i < 5; i++) {
+            BaseHero h1 = team1.get(new Random().nextInt(team1.size()));
+            h1.step();
+        }
+    }
 
-        Robber robber1 = new Robber();
-        System.out.println(robber1);
+    /**
+     * Метод вывода в терминал списка членов команды
+     * @param team - список членов команды
+     */
+    private static void printTeam(ArrayList<BaseHero> team) {
+        for (BaseHero hero : team) {
+            System.out.println(hero.getInfo());
+        }
+    }
 
-        Sniper sniper1 = new Sniper();
-        System.out.println(sniper1.getInfo());
-
-        Spearman spearman1 = new Spearman();
-        System.out.println(spearman1.getInfo());
-
-        Peasant peasant1 = new Peasant();
-        System.out.println(peasant1.getInfo());
+    /**
+     * Метод генерации случайного героя
+     * @return
+     */
+    private static BaseHero createRandomHero() {
+            switch (new Random().nextInt(7)) {
+                case 0:
+                    return new Crossbowman();
+                case 1:
+                    return new Magician();
+                case 2:
+                    return new Peasant();
+                case 3:
+                    return new Priest();
+                case 4:
+                    return new Robber();
+                case 5:
+                    return new Sniper();
+                default:
+                    return new Spearman();
+        }
     }
 }

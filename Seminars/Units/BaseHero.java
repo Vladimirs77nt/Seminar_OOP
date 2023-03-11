@@ -17,57 +17,62 @@
 
 package Seminars.Units;
 
+import java.util.ArrayList;
 import java.util.Random;
  
-public class BaseHero {
+public abstract class BaseHero {
 
-    // базовые характеристики ВСЕХ героев
+    protected static ArrayList<String> namesHero = new ArrayList<>(); // список имен для созданных героев (чтобы проверять на повторы)
+    protected static int number = 0;
+
+    // базовые характеристики ЛЮБЫХ (всех) героев
+    protected String name;  // - имя героя
+    protected int id;       // - id номер героя
     protected int hp;       // - здоровье текущее
     protected int maxHp;    // - максимальный уровень здоровья
-    protected int speed;    // - скорость передвижения
-    protected int damage;   // - урон
+    protected int speed;    // - скорость передвижения (от 1 до 10)
+    protected int damage;   // - наносимый урон (от )
 
-    protected static int number;
-    protected static Random r;  
-
-    static {
-        BaseHero.number = 0;
-        BaseHero.r = new Random();
-    }
-
-    // конструктор
+    /**
+     * Конструктор для базового шаблона героя
+     * @param hp
+     * @param maxHp
+     * @param speed
+     * @param damage
+     */
     public BaseHero(int hp, int maxHp, int speed, int damage) {
         this.hp = hp;
         this.maxHp = maxHp;
         this.speed = speed;
         this.damage = damage;
+        this.id = number;
+        number++;
+        this.name = getNames();
+        namesHero.add(this.name);
     }
 
     /**
      * Получение информации о герое
-     * @return
+     * @return String текстовая строка с информацией о герое
      */
     public String getInfo() {
-        return String.format("Type: %s,  Hp: %d  Speed: %d  Damage: %d  ",
-                this.getClass().getSimpleName(), this.hp, this.speed, this.damage);
+        return String.format("Names: %s,  Type: %s (id: %d),   Hp: %d  Speed: %d,  Damage: %d",
+                this.name, this.getClass().getSimpleName(), this.id, this.hp, this.speed, this.damage);
     }
 
     /**
-     * Лечение
-     * @param Hp
+     * метод рандомного выбора имени из списка NamesFantazy.java
+     * @return String name
      */
-    public void healed(int Hp) {
-        this.hp = Hp + this.hp > this.maxHp ? this.maxHp : Hp + this.hp;
+    private String getNames() {
+        String nameRandom;
+        do {
+            nameRandom = NamesFantazy.values()[new Random().nextInt(NamesFantazy.values().length)].toString();
+        } while (namesHero.size()>0 && namesHero.contains(nameRandom));
+        return nameRandom;
     }
 
-    /**
-     * Получение урона!
-     * @param damage
-     */
-    public void GetDamage(int damage) {
-        if (this.hp - damage > 0) {
-            this.hp -= damage;
-        }
-        // else { die(); }
+    public void step() {
+        System.out.printf("%s %s сделал шаг", this.getClass().getSimpleName(), this.name);
     }
 }

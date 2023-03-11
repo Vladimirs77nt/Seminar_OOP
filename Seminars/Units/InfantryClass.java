@@ -6,7 +6,7 @@
 
 package Seminars.Units;
 
-public class InfantryClass extends BaseHero {
+public abstract class InfantryClass extends BaseHero {
 
     protected int power; // физическая СИЛА персонажа
 

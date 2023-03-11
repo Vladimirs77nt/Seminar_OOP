@@ -2,22 +2,20 @@
 
 package Seminars.Units;
 
-public class Sniper extends ShooterClass {
-
-    public Sniper(int hp, int maxHp, int speed, int damage, int arrows, int accuracy) {
-        super(hp, maxHp, speed, damage, arrows, accuracy);
-    } 
+public class Sniper extends ShooterClass implements HeroInterface{
 
     public Sniper() {
-        super(60, 80, 7, 10, 25, 90);
+        super(60, 80, 8, 15, 38, 9);
     } 
 
-    /**
-     * Атака снайпером - стрелы
-     * @param target
-     */
-    public void Attack(BaseHero target) {
-        int damage = BaseHero.r.nextInt(10, 20);
-        target.GetDamage(damage);
+    @Override
+    public String getInfo() {
+        return String.format(">> Снайпер %-12s (id %-3d)  (Hp: %d  Speed: %d,  Damage: %d)",
+                super.name, super.id, super.hp, super.speed, super.damage);
+    }
+
+    @Override
+    public void step() {
+        System.out.printf("Снайпер %s сделал шаг...\n", super.name);
     }
 }
