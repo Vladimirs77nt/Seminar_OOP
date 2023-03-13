@@ -2,20 +2,11 @@
 
 package Seminars.Units;
 
-public class Magician extends MagicClass implements HeroInterface{
+import java.util.ArrayList;
 
-    public Magician() {
-        super(45, 60, 5, 8, 18);
-    }
+public class Magician extends MagicClass implements GameInterface{
 
-    @Override
-    public String getInfo() {
-        return String.format(">> Маг %-16s (id %-3d)  (Hp: %d  Speed: %d,  Damage: %d)",
-                super.name, super.id, super.hp, super.speed, super.damage);
-    }
-
-    @Override
-    public void step() {
-        System.out.printf("Маг %s сделал шаг...\n", super.name);
+    public Magician(int team, String name) {
+        super(45, 60, 6, 8, 18, team, name);
     }
 }

@@ -2,20 +2,11 @@
 
 package Seminars.Units;
 
-public class Crossbowman extends ShooterClass implements HeroInterface{
+import java.util.ArrayList;
 
-    public Crossbowman() {
-        super(60, 80, 6, 25, 25, 7);
-    }
+public class Crossbowman extends ShooterClass implements GameInterface{
 
-    @Override
-    public String getInfo() {
-        return String.format(">> Арбалетчик %-9s (id %-3d)  (Hp: %d  Speed: %d,  Damage: %d)",
-                super.name, super.id, super.hp, super.speed, super.damage);
-    }
-
-    @Override
-    public void step() {
-        System.out.printf("Арбалетчик %s сделал шаг...\n", super.name);
+    public Crossbowman(int team, String name) {
+        super(60, 80, 7, 25, 25, 7, team, name);
     }
 }

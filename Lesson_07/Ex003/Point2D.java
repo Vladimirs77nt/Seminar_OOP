@@ -21,7 +21,7 @@ public class Point2D {
         this(value, value);
     }
     public Point2D() {
-        this(0);
+        this(0, 0);
     }
 
     public int getX(){

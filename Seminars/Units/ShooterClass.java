@@ -13,14 +13,33 @@
 
 package Seminars.Units;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public abstract class ShooterClass extends BaseHero {
 
     protected int arrows; // количество стрел
     protected int accuracy; // меткость (от 1 до 10) 10 - снайпер
 
-    public ShooterClass(int hp, int maxHp, int speed, int damage, int arrows, int accuracy) {
-        super(hp, maxHp, speed, damage);
+    public ShooterClass(int hp, int maxHp, int speed, int damage, int arrows, int accuracy, int team, String name) {
+        super(hp, maxHp, speed, damage, team, name);
         this.arrows = arrows;
         this.accuracy = accuracy;
+    }
+
+    public int getArrows() {
+        return arrows;
+    }
+    
+    @Override
+    public void step(ArrayList<BaseHero> teamOpponent) {
+        if (arrows>0 && hp>0) {
+            System.out.printf("%s к выстрелу готов !\n", className(this));
+            BaseHero opponent = opponentRandom(teamOpponent);
+            System.out.printf(">  Я выбрал цель! -> %s\n", className(opponent));
+            int damage = Attack(opponent);
+            System.out.println(">  Выстрелил !!! Нанес урон: " + damage);
+            System.out.println();
+        }
     }
 }

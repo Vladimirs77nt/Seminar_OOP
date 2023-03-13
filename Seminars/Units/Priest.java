@@ -2,20 +2,11 @@
 
 package Seminars.Units;
 
-public class Priest extends MagicClass implements HeroInterface{
+import java.util.ArrayList;
 
-    public Priest() {
-        super(55, 70, 6, 6, 20);
-    }
+public class Priest extends MagicClass implements GameInterface{
 
-    @Override
-    public String getInfo() {
-        return String.format(">> Монах %-14s (id %-3d)  (Hp: %d  Speed: %d,  Damage: %d)",
-                super.name, super.id, super.hp, super.speed, super.damage);
-    }
-
-    @Override
-    public void step() {
-        System.out.printf("Монах %s сделал шаг...\n", super.name);
+    public Priest(int team, String name) {
+        super(55, 70, 5, 6, 20, team, name);
     }
 }

@@ -2,20 +2,11 @@
 
 package Seminars.Units;
 
-public class Spearman extends InfantryClass implements HeroInterface{
+import java.util.ArrayList;
 
-    public Spearman() {
-        super(70, 100, 6, 15, 20);
-    }
+public class Spearman extends InfantryClass implements GameInterface{
 
-    @Override
-    public String getInfo() {
-        return String.format(">> Копейщик %-11s (id %-3d)  (Hp: %d  Speed: %d,  Damage: %d)",
-                super.name, super.id, super.hp, super.speed, super.damage);
-    }
-
-    @Override
-    public void step() {
-        System.out.printf("Копейщик %s сделал шаг...\n", super.name);
+    public Spearman(int team, String name) {
+        super(70, 100, 4, 15, 20, team, name);
     }
 }

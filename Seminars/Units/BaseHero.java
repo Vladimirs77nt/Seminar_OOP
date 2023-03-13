@@ -22,12 +22,12 @@ import java.util.Random;
  
 public abstract class BaseHero {
 
-    protected static ArrayList<String> namesHero = new ArrayList<>(); // список имен для созданных героев (чтобы проверять на повторы)
     protected static int number = 0;
 
     // базовые характеристики ЛЮБЫХ (всех) героев
     protected String name;  // - имя героя
     protected int id;       // - id номер героя
+    protected int team;     // - номер команды героя
     protected int hp;       // - здоровье текущее
     protected int maxHp;    // - максимальный уровень здоровья
     protected int speed;    // - скорость передвижения (от 1 до 10)
@@ -40,15 +40,21 @@ public abstract class BaseHero {
      * @param speed
      * @param damage
      */
-    public BaseHero(int hp, int maxHp, int speed, int damage) {
+    public BaseHero(int hp, int maxHp, int speed, int damage, int team, String name) {
         this.hp = hp;
         this.maxHp = maxHp;
         this.speed = speed;
         this.damage = damage;
+        this.team = team;
         this.id = number;
         number++;
-        this.name = getNames();
+        // this.name = createNames();
         namesHero.add(this.name);
+    }
+
+    public BaseHero(int hp, int maxHp, int speed, int damage, int team){
+        name = createNames();
+        this(hp, maxHp, speed, damage, team, name);
     }
 
     /**
@@ -56,23 +62,81 @@ public abstract class BaseHero {
      * @return String текстовая строка с информацией о герое
      */
     public String getInfo() {
-        return String.format("Names: %s,  Type: %s (id: %d),   Hp: %d  Speed: %d,  Damage: %d",
-                this.name, this.getClass().getSimpleName(), this.id, this.hp, this.speed, this.damage);
+        return String.format(">> %-20s ( id: %-3d)   Hp: %d  Speed: %d,  Damage: %d",
+                            className(this), this.id, this.hp, this.speed, this.damage);
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void step(ArrayList<BaseHero> teamOpponent) {
+        System.out.printf("%s выполнил STEP...\n", className(this));
     }
 
     /**
-     * метод рандомного выбора имени из списка NamesFantazy.java
-     * @return String name
+     * * Метод получение названия класса героя + его имя
+     * @return String "класс героя + имя"
      */
-    private String getNames() {
-        String nameRandom;
-        do {
-            nameRandom = NamesFantazy.values()[new Random().nextInt(NamesFantazy.values().length)].toString();
-        } while (namesHero.size()>0 && namesHero.contains(nameRandom));
-        return nameRandom;
+    protected String className(BaseHero hero) {
+        String className = hero.getClass().getSimpleName();
+        if (className.contains("Sniper")) className = "Снайпер";
+        else if (className.contains("Spearman")) className = "Копейщик";
+        else if (className.contains("Robber")) className = "Разбойник";
+        else if (className.contains("Magician")) className = "Маг";
+        else if (className.contains("Crossbowman")) className = "Арбалетчик";
+        else if (className.contains("Peasant")) className = "Крестьянин";
+        else if (className.contains("Priest")) className = "Монах";
+        return (className + " " + name);
     }
 
-    public void step() {
-        System.out.printf("%s %s сделал шаг", this.getClass().getSimpleName(), this.name);
+    /**
+     * Метод выбора оппонента из команды противника с HP больше нуля
+     * @param teamOpponent - ArrayList() команда противника
+     * @return - объект противник
+     */
+    protected BaseHero opponentRandom(ArrayList<BaseHero> teamOpponent){
+        BaseHero opponent;
+        do {
+            opponent = teamOpponent.get(new Random().nextInt(teamOpponent.size()));
+        } while (!(opponent.getHp()>0));
+        return opponent;
+    }
+
+    /**
+     * Метод АТАКА - нанесение повреждения персонажу target
+     * @param target
+     * @return - возвращается величина нанесенного повреждения damage
+     */
+    public int Attack(BaseHero target) {
+        int damage = new Random().nextInt(10, 20);
+        target.GetDamage(damage);
+        return damage;
+    }
+
+    /**
+     * Метод получения удара персонажем
+     * @param damage - здоровье уменьшается на величину damage
+     */
+    public void GetDamage(int damage) {
+        if (hp - damage > 0) {
+            hp -= damage;
+        }
+        else Die();
+    }
+
+    /**
+     * Метод СМЕРТИ
+     * выводится сообщение о гибели персонажа
+     */
+    public void Die(){
+        if (hp<=0) {
+            hp = 0;
+            System.out.printf("Персонаж %s погиб!!!", className(this));
+        }
     }
 }

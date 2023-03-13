@@ -6,7 +6,7 @@
 
  package Seminars.Units;
 
- public abstract class MagicClass extends BaseHero implements HeroInterface{
+ public abstract class MagicClass extends BaseHero implements GameInterface{
  
      protected int magicPower; // магическая сила персонажа
  

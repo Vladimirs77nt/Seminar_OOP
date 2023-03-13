@@ -2,20 +2,11 @@
 
 package Seminars.Units;
 
-public class Peasant extends BaseHero implements HeroInterface{
+import java.util.ArrayList;
 
-    public Peasant() {
-        super(40, 50, 5, 0);
+public class Peasant extends BaseHero implements GameInterface{
+
+    public Peasant(int team, String name) {
+        super(40, 50, 2, 0, team, name);
     } 
-
-    @Override
-    public String getInfo() {
-        return String.format(">> Крестьянин %-9s (id %-3d)  (Hp: %d  Speed: %d,  Damage: %d)",
-                super.name, super.id, super.hp, super.speed, super.damage);
-    }
-
-    @Override
-    public void step() {
-        System.out.printf("Крестьянин %s сделал шаг...\n", super.name);
-    }
 }
