@@ -14,17 +14,15 @@
 package Seminars.Units;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public abstract class ShooterClass extends BaseHero {
 
     protected int arrows; // количество стрел
     protected int accuracy; // меткость (от 1 до 10) 10 - снайпер
 
-    public ShooterClass(int hp, int maxHp, int speed, int damage, int arrows, int accuracy, int team, String name) {
-        super(hp, maxHp, speed, damage, team, name);
+    public ShooterClass(int hp, int maxHp, int speed, int damage, int defence, int attack, int arrows, int team, String name) {
+        super(hp, maxHp, speed, damage, defence, attack, team, name);
         this.arrows = arrows;
-        this.accuracy = accuracy;
     }
 
     public int getArrows() {
@@ -32,12 +30,21 @@ public abstract class ShooterClass extends BaseHero {
     }
     
     @Override
-    public void step(ArrayList<BaseHero> teamOpponent) {
-        if (arrows>0 && hp>0) {
+    public void step(ArrayList<BaseHero> teamArray) {
+        int teamOpponent = 1;
+        if (this.team == 1) teamOpponent = 2;
+        if (hp<=0) Die();
+        else if (arrows>0) {
             System.out.printf("%s к выстрелу готов !\n", className(this));
-            BaseHero opponent = opponentRandom(teamOpponent);
+            int opponentIndex = opponentRandomIndex(teamArray, teamOpponent);
+            BaseHero opponent = teamArray.get(opponentIndex);
             System.out.printf(">  Я выбрал цель! -> %s\n", className(opponent));
-            int damage = Attack(opponent);
+
+
+            int damage = new Random().nextInt(10, 20);
+        target.GetDamage(damage);
+
+
             System.out.println(">  Выстрелил !!! Нанес урон: " + damage);
             System.out.println();
         }

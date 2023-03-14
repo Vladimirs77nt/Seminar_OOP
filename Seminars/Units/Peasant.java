@@ -2,11 +2,12 @@
 
 package Seminars.Units;
 
-import java.util.ArrayList;
-
 public class Peasant extends BaseHero implements GameInterface{
 
+    protected int contain; // сколько стрел может нести
+
     public Peasant(int team, String name) {
-        super(40, 50, 2, 0, team, name);
+        super(1, 1, 3, 1, 1, 1, team, name);
+        this.contain = 1;
     } 
 }

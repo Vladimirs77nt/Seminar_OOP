@@ -5,6 +5,6 @@ package Seminars.Units;
 public class Sniper extends ShooterClass implements GameInterface{
 
     public Sniper(int team, String name) {
-        super(60, 80, 9, 15, 38, 9, team, name);
+        super(15, 15, 9, 8, 10, 12, 32, team, name);
     }
 }
