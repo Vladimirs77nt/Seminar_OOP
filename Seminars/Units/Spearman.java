@@ -7,6 +7,6 @@ import java.util.ArrayList;
 public class Spearman extends InfantryClass implements GameInterface{
 
     public Spearman(int team, String name) {
-        super(70, 100, 4, 15, 20, team, name);
+        super(10, 10, 4, 1, 5, 4, team, name);
     }
 }

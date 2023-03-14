@@ -30,31 +30,33 @@ public abstract class BaseHero {
     protected int team;     // - номер команды героя
     protected int hp;       // - здоровье текущее
     protected int maxHp;    // - максимальный уровень здоровья
-    protected int speed;    // - скорость передвижения (от 1 до 10)
-    protected int damage;   // - наносимый урон (от )
+    protected int speed;    // - скорость передвижения
+    protected int damage;   // - наносимый урон
+    protected int defence;  // - защита
+    protected int attaсk;   // - уровень атаки
 
     /**
      * Конструктор для базового шаблона героя
-     * @param hp
-     * @param maxHp
-     * @param speed
-     * @param damage
+     * @param hp - текущее здоровье
+     * @param maxHp - максимальное здоровье
+     * @param speed - скорость
+     * @param damage - уровень удара
+     * @param defence - уровень защиты
+     * @param attack - уровень атаки
+     * @param team - номер команды
+     * @param name - имя героя
      */
-    public BaseHero(int hp, int maxHp, int speed, int damage, int team, String name) {
+    public BaseHero(int hp, int maxHp, int speed, int damage, int defence, int attack, int team, String name) {
         this.hp = hp;
         this.maxHp = maxHp;
         this.speed = speed;
         this.damage = damage;
+        this.defence = defence;
+        this.attaсk = attack;
         this.team = team;
+        this.name = name;
         this.id = number;
         number++;
-        // this.name = createNames();
-        namesHero.add(this.name);
-    }
-
-    public BaseHero(int hp, int maxHp, int speed, int damage, int team){
-        name = createNames();
-        this(hp, maxHp, speed, damage, team, name);
     }
 
     /**
@@ -62,8 +64,20 @@ public abstract class BaseHero {
      * @return String текстовая строка с информацией о герое
      */
     public String getInfo() {
-        return String.format(">> %-20s ( id: %-3d)   Hp: %d  Speed: %d,  Damage: %d",
-                            className(this), this.id, this.hp, this.speed, this.damage);
+        return String.format(">> %-20s ( команда: %d)   Hp: %-2d  Speed: %2d,  Damage: %2d,  Defence: %2d",
+                            className(this), this.team, this.hp, this.speed, this.damage, this.defence);
+    }
+
+    /**
+     * какая команда?
+     * @return
+     */
+    public int getTeam() {
+        return team;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getSpeed() {
@@ -87,24 +101,11 @@ public abstract class BaseHero {
         if (className.contains("Sniper")) className = "Снайпер";
         else if (className.contains("Spearman")) className = "Копейщик";
         else if (className.contains("Robber")) className = "Разбойник";
-        else if (className.contains("Magician")) className = "Маг";
+        else if (className.contains("Magician")) className = "Колдун";
         else if (className.contains("Crossbowman")) className = "Арбалетчик";
         else if (className.contains("Peasant")) className = "Крестьянин";
         else if (className.contains("Priest")) className = "Монах";
-        return (className + " " + name);
-    }
-
-    /**
-     * Метод выбора оппонента из команды противника с HP больше нуля
-     * @param teamOpponent - ArrayList() команда противника
-     * @return - объект противник
-     */
-    protected BaseHero opponentRandom(ArrayList<BaseHero> teamOpponent){
-        BaseHero opponent;
-        do {
-            opponent = teamOpponent.get(new Random().nextInt(teamOpponent.size()));
-        } while (!(opponent.getHp()>0));
-        return opponent;
+        return (className + " " + hero.getName());
     }
 
     /**
@@ -138,5 +139,19 @@ public abstract class BaseHero {
             hp = 0;
             System.out.printf("Персонаж %s погиб!!!", className(this));
         }
+    }
+
+    /**
+     * Метод выбора индекса оппонента из команды противника с HP больше нуля
+     * @param teamArray - ArrayList() список всех игроков, из всех команд
+     * @param team - номер команды противника
+     * @return - объект противник
+     */
+    protected int opponentRandomIndex(ArrayList<BaseHero> teamArray, int team){
+        int indexOpponent;
+        do {
+            indexOpponent = new Random().nextInt(teamArray.size());
+        } while ((teamArray.get(indexOpponent).getHp()<=0) || (teamArray.get(indexOpponent).getTeam() != team));
+        return indexOpponent;
     }
 }

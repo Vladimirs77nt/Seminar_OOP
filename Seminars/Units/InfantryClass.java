@@ -8,10 +8,7 @@ package Seminars.Units;
 
 public abstract class InfantryClass extends BaseHero {
 
-    protected int power; // физическая СИЛА персонажа
-
-    public InfantryClass(int hp, int maxHp, int speed, int damage, int power) {
-        super(hp, maxHp, speed, damage);
-        this.power = power;
+    public InfantryClass(int hp, int maxHp, int speed, int damage, int defence, int attack, int team, String name) {
+        super(hp, maxHp, speed, damage, defence, attack, team, name);
     }
 }
