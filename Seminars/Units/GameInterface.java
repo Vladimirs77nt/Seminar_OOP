@@ -3,6 +3,6 @@ package Seminars.Units;
 import java.util.ArrayList;
 
 public interface GameInterface {
-    void step(ArrayList<BaseHero> team);
+    void step(ArrayList<BaseHero> teamArray);
     String getInfo();
 }

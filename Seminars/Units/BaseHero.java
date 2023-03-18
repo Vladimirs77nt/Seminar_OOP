@@ -76,6 +76,10 @@ public abstract class BaseHero {
         return team;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getSpeed() {
         return speed;
     }
@@ -101,7 +105,7 @@ public abstract class BaseHero {
         else if (className.contains("Crossbowman")) className = "Арбалетчик";
         else if (className.contains("Peasant")) className = "Крестьянин";
         else if (className.contains("Priest")) className = "Монах";
-        return (className + " " + name);
+        return (className + " " + hero.getName());
     }
 
     /**

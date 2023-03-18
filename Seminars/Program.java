@@ -52,13 +52,14 @@ public class Program {
             System.out.println();
             System.out.println("Игровой Ход №" + count);
             for (BaseHero hero : team) {
-                if (hero.getTeam() == 1) hero.step(team2);
-                else hero.step(team1);
+                if (hero.getTeam() == 1) hero.step(team);
+                else hero.step(team);
             }
             System.out.println();
             System.out.println("Итог Хода");
-            printTeam(teamAll);
+            printTeam(team, 0);
             count++;
+            if (count >1) break; // пока делаем только один игровой ход
         }
     }
 
