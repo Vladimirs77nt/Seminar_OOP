@@ -4,7 +4,7 @@ package Seminars.Units;
 
 public class Spearman extends InfantryClass implements GameInterface{
 
-    public Spearman(int team, String name) {
-        super(10, 10, 4, 1, 5, 4, team, name);
+    public Spearman(int team, String name, int x, int y) {
+        super(10, 10, 4, 1, 3, 5, 4, team, name, x, y);
     }
 }

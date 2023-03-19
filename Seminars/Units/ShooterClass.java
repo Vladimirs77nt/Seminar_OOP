@@ -3,48 +3,64 @@
 это родительский класс для:
 3.1. Sniper - класс СНАЙПЕРОВ (потомок класса ShooterClass)
 3.2. Crossbowman - класс АРБАЛЕТЧИКОВ (потомок класса ShooterClass)
-
-сравнение АРБАЛЕТЧИКА и СНАЙПЕРА:
-    1) арбалетчик менее точен (7), чем снайпер (9) / accuracy
-    2) у арбалетчика меньше стрел (24), чем у снайпера (38) / arrows
-    3) урон арбалетчика больше (25), чем у снайпера (15) / damage
-    4) арбалетчик двигается медленее (6), чем снайпер (8) / speed
 */
 
 package Seminars.Units;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public abstract class ShooterClass extends BaseHero {
 
     protected int arrows; // количество стрел
-    protected int accuracy; // меткость (от 1 до 10) 10 - снайпер
 
-    public ShooterClass(int hp, int maxHp, int speed, int damage, int arrows, int accuracy, int team, String name) {
-        super(hp, maxHp, speed, damage, team, name);
+    public ShooterClass(float hp, float maxHp, int speed, int damage, int damageMax, int defence, int attack, int arrows, int team,
+                        String name, int x, int y) {
+        super(hp, maxHp, speed, damage, damageMax, defence, attack, team, name, x, y);
         this.arrows = arrows;
     }
 
-    public int getArrows() {
-        return arrows;
+    protected int getArrows() {
+        return this.arrows;
     }
     
     @Override
     public void step(ArrayList<BaseHero> teamArray) {
-        int teamOpponent = 1;
-        if (this.team == 1) teamOpponent = 2;
         if (hp<=0) Die();
         else if (arrows>0) {
-            System.out.printf("%s к выстрелу готов !\n", className(this));
-            int opponentIndex = opponentRandomIndex(teamArray, teamOpponent);
-            BaseHero opponent = teamArray.get(opponentIndex);
-            System.out.printf(">  Я выбрал цель! -> %s\n", className(opponent));
-            int damageOpponent = new Random().nextInt(10, 20);
-            opponent.GetDamage(damageOpponent);
-            System.out.println(">  Выстрелил !!! Нанес урон: " + damageOpponent);
-            teamArray.set(opponentIndex, opponent);
-            System.out.println();
+            System.out.printf("%s к выстрелу готов ! у меня %d стрел!\n", className(this), arrows);
+            int opponentIndex = nearestIndexEnemy(teamArray);
+            if (opponentIndex<0) this.setGameOver(team);
+            else {
+                BaseHero opponent = teamArray.get(opponentIndex);
+                System.out.printf(">  Я выбрал цель! -> %s", className(opponent));
+                System.out.printf("  (расстояние до цели: %d)\n", (int)position.getDistance(opponent));
+                System.out.print(">  Выстрелил ! ");
+                this.attack(opponent);
+                int indexPeasant  = mineIndexPeasant(teamArray);
+                if (indexPeasant<0) {
+                    arrows -= 1;
+                    System.out.println(">  У меня запас стрел уменьшился на одну...");
+                }
+                opponentIndex = nearestIndexEnemy(teamArray);
+                if (opponentIndex<0) this.setGameOver(team);
+            }
         }
+        else 
+            System.out.printf("%s стрелять не могу... У меня закончились стрелы!\n", className(this));
+    }
+
+    /**
+     * Метод поиска индекса крестьянина из своей команды
+     * @param teamArray
+     * @return индекс крестьянина, если нет то будет -1
+     */
+    protected int mineIndexPeasant(ArrayList<BaseHero> teamArray){
+        for (int i = 0; i < teamArray.size(); i++) {
+            // если: 1) герой из своей команды, 2) это крестьянин, 3) он живой
+            if (teamArray.get(i).getTeam() == team && teamArray.get(i).getClassHero().equals("Крестьянин") && teamArray.get(i).getHp()>0)
+                return i;
+        }
+        System.out.println(" ... т.к. все крестьяне убиты, запас стрел будет уменьшаться");
+        return -1;
     }
 }

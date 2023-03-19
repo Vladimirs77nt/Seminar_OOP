@@ -10,8 +10,9 @@
  
      protected int magicPower; // магическая сила персонажа
  
-     public MagicClass(int hp, int maxHp, int speed, int damage, int defence, int attack, int magicPower, int team, String name) {
-        super(hp, maxHp, speed, damage, defence, attack, team, name);
+     public MagicClass(float hp, float maxHp, int speed, int damage, int damageMax, int defence, int attack, int magicPower, int team,
+                        String name, int x, int y) {
+        super(hp, maxHp, speed, damage, damageMax, defence, attack, team, name, x, y);
         this.magicPower = magicPower;
      }
  }

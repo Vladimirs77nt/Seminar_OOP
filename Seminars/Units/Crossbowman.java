@@ -2,11 +2,9 @@
 
 package Seminars.Units;
 
-import java.util.ArrayList;
-
 public class Crossbowman extends ShooterClass implements GameInterface{
 
-    public Crossbowman(int team, String name) {
-        super(60, 80, 7, 25, 25, 7, 10, team, name);
+    public Crossbowman(int team, String name, int x, int y) {
+        super(60, 80, 7, 2, 3, 25, 7, 16, team, name, x, y);
     }
 }

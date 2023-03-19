@@ -4,7 +4,7 @@ package Seminars.Units;
 
 public class Robber extends InfantryClass implements GameInterface{
 
-    public Robber(int team, String name) {
-        super(10, 10, 6, 2, 3, 8, team, name);
+    public Robber(int team, String name, int x, int y) {
+        super(10, 10, 6, 2, 4, 3, 8, team, name, x, y);
     }
 }

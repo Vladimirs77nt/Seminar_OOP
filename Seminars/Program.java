@@ -3,6 +3,7 @@ package Seminars;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
+import java.util.Scanner;
 
 import Seminars.Units.BaseHero;
 import Seminars.Units.Crossbowman;
@@ -19,47 +20,96 @@ public class Program {
     // список имен для созданных героев (чтобы проверять на повторы)
     public static ArrayList<String> namesHero = new ArrayList<>();
     public static ArrayList<BaseHero> team = new ArrayList<>();
+
     public static void main(String[] args) {
 
         // создаем команду №1 и выводим список в терминал
-        for (int i = 0; i < 10; i++)
-            team.add(createRandomHeroTeam1(1, createNames()));
+        for (int i = 0; i < 10; i++) {
+            switch (new Random().nextInt(4)) {
+                case 0:
+                    team.add(new Magician(1, createNames(), 0, i));
+                    break;
+                case 1:
+                    team.add(new Robber(1, createNames(), 0, i));
+                    break;
+                case 2:
+                    team.add(new Sniper(1, createNames(), 0, i));
+                    break;
+                case 3:
+                    team.add(new Peasant(1, createNames(), 0, i));
+                    break;
+            }
+        }
         System.out.println("--- Команда №1 ---");
         printTeam(team, 1);
+        System.out.println();
 
         // создаем команду №2 и выводим список в терминал
-        System.out.println();
-        for (int i = 0; i < 10; i++)
-            team.add(createRandomHeroTeam2(2, createNames()));
+        for (int i = 0; i < 10; i++) {
+            switch (new Random().nextInt(4)) {
+                case 0:
+                    team.add(new Priest(2, createNames(), 9, i));
+                    break;
+                case 1:
+                    team.add(new Spearman(2, createNames(), 9, i));
+                    break;
+                case 2:
+                    team.add(new Crossbowman(2, createNames(), 9, i));
+                    break;
+                case 3:
+                    team.add(new Peasant(2, createNames(), 9, i));
+                    break;
+            }
+        }
         System.out.println("--- Команда №2 ---");
         printTeam(team, 2);
+        System.out.println();
 
+        // сортировка команды по скорости героя
         team.sort(new Comparator<BaseHero>() {
             @Override
             public int compare(BaseHero u1, BaseHero u2) {
                 if (u2.getSpeed() - u1.getSpeed() == 0)
-                    return (u2.getHp() - u1.getHp());
+                    return (int)(u2.getHp() - (int)(u1.getHp()));
                 return (u2.getSpeed() - u1.getSpeed());
             }
         });
-        System.out.println();
-        int count = 1;
-        System.out.println("--- НАЧАЛО БОЯ ---");
+
+        System.out.println("--- ВСЕ УЧАСТНИКИ ---");
         printTeam(team, 0);
         System.out.println();
 
-        while (true) {
-            System.out.println();
+        System.out.println("--- НАЧАЛО БОЯ ---");
+        int count = 1;
+        System.out.println();
+
+        Scanner iScanner = new Scanner(System.in, "cp866");
+        System.out.println("Нажмите кнопку Enter...");
+        while (!iScanner.nextLine().equals("0")) {
             System.out.println("Игровой Ход №" + count);
             for (BaseHero hero : team) {
-                if (hero.getTeam() == 1) hero.step(team);
-                else hero.step(team);
+                if (hero.getHp()>0) hero.step(team);
+                if (hero.getGameOver()>0){
+                    System.out.println();
+                    System.out.println(" --- <<< ИГРА ЗАВЕРШЕНА !!! >>> ---");
+                    System.out.println("Пnобедила команда № " + hero.getGameOver());
+                    count = 0;
+                    break;
+                }
             }
+            if (count == 0) break;
+            System.out.println("Нажмите кнопку Enter...");
+            iScanner.nextLine();
+            System.out.println("Итог Игрового Хода:");
+            System.out.println("--- Команда №1 ---");
+            printTeam(team, 1);
             System.out.println();
-            System.out.println("Итог Хода");
-            printTeam(team, 0);
+            System.out.println("--- Команда №2 ---");
+            printTeam(team, 2);
+            System.out.println();
             count++;
-            if (count >1) break; // пока делаем только один игровой ход
+            System.out.println();
+            System.out.println("Нажмите кнопку Enter... (завершение 0)");
         }
     }
 
@@ -67,75 +117,13 @@ public class Program {
     /**
      * Метод вывода в терминал списка членов команды
      * 
-     * @param team - список членов команды
+     * @param team - номер команды (1,2,3...), если 0 - то все!
      */
     private static void printTeam(ArrayList<BaseHero> teamArray, int team) {
         for (BaseHero hero : teamArray) {
-            if (hero.getTeam() == team || team ==0) System.out.println(hero.getInfo());
-        }
-    }
-
-    /**
-     * Метод генерации случайного героя
-     * 
-     * @return
-     */
-    private static BaseHero createRandomHero(int team, String name) {
-        switch (new Random().nextInt(7)) {
-            case 0:
-                return new Crossbowman(team, name);
-            case 1:
-                return new Magician(team, name);
-            case 2:
-                return new Peasant(team, name);
-            case 3:
-                return new Priest(team, name);
-            case 4:
-                return new Robber(team, name);
-            case 5:
-                return new Sniper(team, name);
-            default:
-                return new Spearman(team, name);
-        }
-    }
-
-    /**
-     * Метод генерации случайного героя для команды Вариант 1
-     * Персонажи: Колдун (magician), Разбойник (Robber), Снайпер (Sniper),
-     * Крестьянин (Peasant)
-     * 
-     * @return
-     */
-    private static BaseHero createRandomHeroTeam1(int team, String name) {
-        switch (new Random().nextInt(4)) {
-            case 0:
-                return new Magician(team, name);
-            case 1:
-                return new Robber(team, name);
-            case 2:
-                return new Sniper(team, name);
-            default:
-                return new Peasant(team, name);
-        }
-    }
-
-    /**
-     * Метод генерации случайного героя для команды Вариант 2
-     * Персонажи: Маг (magician), Разбойник (Robber), Снайпер (Sniper), Крестьянин
-     * (Peasant)
-     * 
-     * @return
-     */
-    private static BaseHero createRandomHeroTeam2(int team, String name) {
-        switch (new Random().nextInt(4)) {
-            case 0:
-                return new Priest(team, name);
-            case 1:
-                return new Spearman(team, name);
-            case 2:
-                return new Crossbowman(team, name);
-            default:
-                return new Peasant(team, name);
+            if (hero.getTeam() == team || team == 0){
+                if (hero.getHp() > 0) System.out.println(hero.getInfo());
+            }
         }
     }
 

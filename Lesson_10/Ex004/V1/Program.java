@@ -1,5 +1,7 @@
 package Lesson_10.Ex004.V1;
 
+import Lesson_10.Ex004.V1.AudioContent;
+
 public class Program {
     public static void main(String[] args) {
         Repository audioStorage = new Repository("audioStorage");
