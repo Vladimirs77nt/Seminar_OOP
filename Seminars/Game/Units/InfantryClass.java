@@ -4,7 +4,7 @@
 2.2. Spearman - класс КОПЕЙЩИКОВ (потомок класса InfantryClass)
 */
 
-package Seminars.Units;
+package Seminars.Game.Units;
 
 public abstract class InfantryClass extends BaseHero {
 

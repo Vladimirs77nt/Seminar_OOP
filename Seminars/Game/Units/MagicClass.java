@@ -4,9 +4,9 @@
 1.2. Magician - класс МАГОВ (потомок MagClass)
  */
 
- package Seminars.Units;
+ package Seminars.Game.Units;
 
- public abstract class MagicClass extends BaseHero implements GameInterface{
+ public abstract class MagicClass extends BaseHero{
  
      protected int magicPower; // магическая сила персонажа
  

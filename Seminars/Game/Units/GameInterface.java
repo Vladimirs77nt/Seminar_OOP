@@ -1,4 +1,4 @@
-package Seminars.Units;
+package Seminars.Game.Units;
 
 import java.util.ArrayList;
 

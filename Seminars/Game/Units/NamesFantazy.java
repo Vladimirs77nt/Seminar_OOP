@@ -1,4 +1,4 @@
-package Seminars.Units;
+package Seminars.Game.Units;
 
 public enum NamesFantazy{
     Агна, Кили, Чучхек, Лэйхо, Далгал, Хитоэль, Даин, Таклинн, Олориц, Маухур, Наугрим, Тристрид, Еберк, Нирнаэт,

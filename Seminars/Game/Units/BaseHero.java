@@ -6,7 +6,7 @@
 3. ShooterClass - класс бойцов дальнего боя / стрелков = СНАЙПЕРЫ, АРБАЛЕТЧИКИ...
 */
 
-package Seminars.Units;
+package Seminars.Game.Units;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,7 +20,7 @@ public abstract class BaseHero {
     protected int id;       // - id номер героя
     protected int team;     // - номер команды героя
     protected int team_enemy;     // - номер команды ПРОТИВНИКОВ
-    protected float hp;       // - здоровье текущее
+    public float hp;       // - здоровье текущее
     protected float maxHp;    // - максимальный уровень здоровья
     protected int speed;    // - скорость передвижения
     protected int damage;   // - наносимый урон
@@ -42,7 +42,7 @@ public abstract class BaseHero {
      * @param team - номер команды
      * @param name - имя героя
      */
-    public BaseHero(float hp, float maxHp, int speed, int damage, int damageMax, int defence, int attack, int team, String name, int x, int y) {
+    protected BaseHero(float hp, float maxHp, int speed, int damage, int damageMax, int defence, int attack, int team, String name, int x, int y) {
         this.hp = hp;
         this.maxHp = maxHp;
         this.speed = speed;
@@ -54,26 +54,17 @@ public abstract class BaseHero {
         this.name = name;
         this.id = number;
         number++;
-        position = new Position(name, x, y);
+        this.position = new Position(x, y);
         if (team == 1) team_enemy = 2;
         else team_enemy = 1;
         gameover = 0;
     }
 
     /**
-     * Получение информации о герое
-     * @return String текстовая строка с информацией о герое
-     */
-    public String getInfo() {
-        return String.format(">> %-20s ( команда: %d)   Hp: %-2f  Speed: %2d,  Damage: %2d,  Defence: %2d",
-                            className(this), this.team, this.hp, this.speed, this.damage, this.defence);
-    }
-
-    /**
      * Получение информации о номере команды
      * @return
      */
-    public int getTeam() {
+    public int getTeam(){
         return team;
     }
 
@@ -81,8 +72,12 @@ public abstract class BaseHero {
      * Имя героя
      * @return
      */
-    public String getName() {
+    public String getName(){
         return name;
+    }
+
+    public String getClassName(){
+        return "";
     }
 
     /**
@@ -101,15 +96,25 @@ public abstract class BaseHero {
         return hp;
     }
 
-    public int getArrowReserve() {
-        return -1;
-    }
-
-    protected void setArrowReserve(int arrowReserve) {
-    }
-
     public int getGameOver() {
         return gameover;
+    }
+
+    /**
+     * Получение информации о герое
+     * @return String текстовая строка с информацией о герое
+     */
+    // public String getInfo(){
+    //     return String.format(">> %-20s ( команда: %d)   Hp: %-2f  Speed: %2d,  Damage: %2d,  Defence: %2d",
+    //                         this.getClassName(), this.team, this.hp, this.speed, this.damage, this.defence);
+    // }
+    public String getInfo(){
+        String outStr = String.format("\t%-3s\t⚔️ %-3d\t\uD83D\uDEE1 %-3d\t♥️%-3d%%\t☠️%-3d\t ", this.getClassName(), this.attaсk, defence, (int)(hp * 100/maxHp), (damage + damageMax)/2);
+        return outStr;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 
     public void setGameOver(int t) {
@@ -118,29 +123,11 @@ public abstract class BaseHero {
 
     /** Метод STEP - абстрактный для всех */
     public void step(ArrayList<BaseHero> teamOpponent) {
-        System.out.printf("%s выполнил STEP...\n", className(this));
+        System.out.printf("%s выполнил STEP...\n", this.getName());
     }
 
-    /**
-     * * Метод получение названия класса героя + его имя
-     * @return String "класс героя + имя"
-     */
-    protected String className(BaseHero hero) {
-        return (hero.getClassHero() + " " + hero.getName());
-    }
 
-    protected String getClassHero() {
-        String className = this.getClass().getSimpleName();
-        if (className.contains("Sniper")) className = "Снайпер";
-        else if (className.contains("Spearman")) className = "Копейщик";
-        else if (className.contains("Robber")) className = "Разбойник";
-        else if (className.contains("Magician")) className = "Колдун";
-        else if (className.contains("Crossbowman")) className = "Арбалетчик";
-        else if (className.contains("Peasant")) className = "Крестьянин";
-        else if (className.contains("Priest")) className = "Монах";
-        return className;
-    }
-
+// ------------------- АТАКА и ПОЛУЧЕНИЕ DAMAGE ---------------------------
     /**
      * Метод АТАКА - нанесение повреждения персонажу target
      * @param target
@@ -174,11 +161,11 @@ public abstract class BaseHero {
      */
     public void Die(){
         hp = 0;
-        System.out.printf(" ----> Персонаж %s убит !!! ...\n", className(this));
+        System.out.printf(" ----> Персонаж %s убит !!! ...\n", this.getName());
     }
 
     /**
-     * Метод выбора индекса оппонента из команды противника с HP больше нуля
+     * Метод выбора СЛУЧАЙНОГО индекса оппонента из команды противника с HP больше нуля
      * @param teamArray - ArrayList() список всех игроков, из всех команд
      * @param team - номер команды противника
      * @return - объект противник

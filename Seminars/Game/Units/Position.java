@@ -1,11 +1,9 @@
-package Seminars.Units;
+package Seminars.Game.Units;
 
 public class Position{
-    protected String name;
     protected int x, y;
 
-    public Position(String name, int x, int y) {
-        this.name = name;
+    public Position(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -17,5 +15,9 @@ public class Position{
      */
     public double getDistance(BaseHero unit){
         return Math.sqrt(Math.pow(x - unit.position.x, 2) + Math.pow(y - unit.position.y, 2));
+    }
+
+    public boolean isEquals(Position position){
+        return (position.x == x && position.y == y);
     }
 }
