@@ -15,4 +15,9 @@
         super(hp, maxHp, speed, damage, damageMax, defence, attack, team, name, x, y);
         this.magicPower = magicPower;
      }
+
+     @Override
+     public String getInfo(){
+         return super.getInfo() + String.format("\t    ");
+     }
  }

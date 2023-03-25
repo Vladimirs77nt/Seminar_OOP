@@ -13,4 +13,9 @@ public class Magician extends MagicClass implements GameInterface{
     public String getClassName(){
         return "Колдун";
     }
+
+    @Override
+    public String getCharName(){
+        return String.format("\u16DD");
+    }
 }

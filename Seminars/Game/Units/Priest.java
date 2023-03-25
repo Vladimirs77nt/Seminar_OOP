@@ -12,4 +12,9 @@ public class Priest extends MagicClass implements GameInterface{
     public String getClassName(){
         return "Монах";
     }
+
+    @Override
+    public String getCharName(){
+        return "V";
+    }
 }

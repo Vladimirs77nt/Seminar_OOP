@@ -12,4 +12,9 @@ public class Sniper extends ShooterClass implements GameInterface{
     public String getClassName(){
         return "Снайпер";
     }
+
+    @Override
+    public String getCharName(){
+        return "S";
+    }
 }

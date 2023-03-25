@@ -12,4 +12,9 @@ public class Robber extends InfantryClass implements GameInterface{
     public String getClassName(){
         return "Разбойник";
     }
+
+    @Override
+    public String getCharName(){
+        return "R";
+    }
 }

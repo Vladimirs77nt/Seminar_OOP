@@ -28,7 +28,7 @@ public abstract class BaseHero {
     protected int defence;  // - защита
     protected int attaсk;   // - уровень атаки
     protected Position position; // - координаты героя
-    protected int gameover;
+    protected int gameover; // - - победы пока нет, или номер победившей команды!!!
     
     /**
      * Конструктор для базового шаблона героя
@@ -60,18 +60,10 @@ public abstract class BaseHero {
         gameover = 0;
     }
 
-    /**
-     * Получение информации о номере команды
-     * @return
-     */
     public int getTeam(){
         return team;
     }
 
-    /**
-     * Имя героя
-     * @return
-     */
     public String getName(){
         return name;
     }
@@ -80,36 +72,25 @@ public abstract class BaseHero {
         return "";
     }
 
-    /**
-     * Скорость героя
-     * @return
-     */
     public int getSpeed() {
         return speed;
     }
 
-    /**
-     * Здоровье героя
-     * @return
-     */
     public float getHp() {
         return hp;
+    }
+
+    public String getCharName(){
+        return "";
     }
 
     public int getGameOver() {
         return gameover;
     }
 
-    /**
-     * Получение информации о герое
-     * @return String текстовая строка с информацией о герое
-     */
-    // public String getInfo(){
-    //     return String.format(">> %-20s ( команда: %d)   Hp: %-2f  Speed: %2d,  Damage: %2d,  Defence: %2d",
-    //                         this.getClassName(), this.team, this.hp, this.speed, this.damage, this.defence);
-    // }
+    // Получение информации о герое
     public String getInfo(){
-        String outStr = String.format("\t%-3s\t⚔️ %-3d\t\uD83D\uDEE1 %-3d\t♥️%-3d%%\t☠️%-3d\t ", this.getClassName(), this.attaсk, defence, (int)(hp * 100/maxHp), (damage + damageMax)/2);
+        String outStr = String.format("(%s) %-10s  ⚔️  %-3d \u26E8 %-3d \u26E8 %-3d%%  ☠️  %-3d", this.getCharName(), this.getClassName(), this.attaсk, defence, (int)(hp * 100/maxHp), (damage + damageMax)/2);
         return outStr;
     }
 
@@ -121,9 +102,9 @@ public abstract class BaseHero {
         gameover = t;
     }
 
-    /** Метод STEP - абстрактный для всех */
+    /** Метод STEP - базовый для всех */
     public void step(ArrayList<BaseHero> teamOpponent) {
-        System.out.printf("%s выполнил STEP...\n", this.getName());
+        System.out.printf("(%d) %s выполнил STEP...\n", this.getTeam(), this.getClassName(), this.getName());
     }
 
 
@@ -161,7 +142,7 @@ public abstract class BaseHero {
      */
     public void Die(){
         hp = 0;
-        System.out.printf(" ----> Персонаж %s убит !!! ...\n", this.getName());
+        System.out.printf(" ----> %s %s убит !!! ...\n", this.getClassName(),this.getName());
     }
 
     /**
@@ -181,7 +162,7 @@ public abstract class BaseHero {
     /**
      * Метод выбора индекса ближайшего оппонента из команды противника с HP больше нуля
      * @param teamArray - ArrayList() список всех игроков, из всех команд
-     * @return - индекс противника
+     * @return - индекс противника (если вернется -1 - значит противников больше нет!)
      */
     protected int nearestIndexEnemy(ArrayList<BaseHero> teamArray){
         double lengthMin = 100;

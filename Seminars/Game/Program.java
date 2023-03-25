@@ -15,24 +15,27 @@ public class Program {
     public static ArrayList<BaseHero> darkSide;
     public static ArrayList<BaseHero> allUnits;
     public static ArrayList<String> namesHero;
+    public static Scanner iScanner = new Scanner(System.in, "cp866");
+    static boolean GameOver = false;
 
     public static void main(String[] args) {
-        System.out.println("--- НАЧАЛО БОЯ ---");
-        int count = 1;
-        System.out.println();
 
         init();
-        Scanner iScanner = new Scanner(System.in, "cp866");
-        System.out.println("Нажмите кнопку Enter...");
 
-        while (!iScanner.nextLine().equals("0")) {
-            System.out.println("Игровой Ход №" + count);
+        do {
             ConsoleView.view();
+
             makeStep();
-            count++;
+
             System.out.println();
             System.out.println("Нажмите кнопку Enter... (0 - завершение игры)");
-        }
+            String str = iScanner.nextLine();
+            if (str.equals("0"))
+                GameOver = true;
+            
+        } while (!GameOver);
+
+        iScanner.close();
     }
 
     // -----------------------------------------------------------------------------------
@@ -97,19 +100,16 @@ public class Program {
     private static void makeStep(){
         for (BaseHero hero : allUnits) {
                 hero.step(allUnits);
-        }
-    }
-
-    /**
-     * Метод вывода в терминал списка членов команды
-     * 
-     * @param allUnits - номер команды (1,2,3...), если 0 - то все!
-     */
-    private static void printallUnits(ArrayList<BaseHero> allUnitsArray, int team) {
-        for (BaseHero hero : allUnitsArray) {
-            if (hero.getTeam() == team || team == 0){
-                if (hero.getHp() > 0) System.out.println(hero.getInfo());
-            }
+                if (hero.getGameOver() > 0){
+                    if (hero.getGameOver() == 1){
+                        System.out.println("\n  <<< Победила команда Green !!! >>>");
+                    break;
+                    }
+                    else {
+                        System.out.println("\n  <<< Победила команда Blue !!! >>>");
+                        break;
+                    }
+                }
         }
     }
 

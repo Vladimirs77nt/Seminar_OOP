@@ -12,4 +12,14 @@ public class Peasant extends BaseHero implements GameInterface{
     public String getClassName(){
         return "Крестьянин";
     }
+
+    @Override
+    public String getCharName(){
+        return "K";
+    }
+
+    @Override
+    public String getInfo(){
+        return super.getInfo() + String.format("\t    ");
+    }
 }

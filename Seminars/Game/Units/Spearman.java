@@ -10,6 +10,11 @@ public class Spearman extends InfantryClass implements GameInterface{
 
     @Override
     public String getClassName(){
-        return "Копейщик";
+        return "Пехотинец";
+    }
+
+    @Override
+    public String getCharName(){
+        return "П";
     }
 }

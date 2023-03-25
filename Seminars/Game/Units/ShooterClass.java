@@ -19,6 +19,12 @@ public abstract class ShooterClass extends BaseHero {
         this.arrows = arrows;
     }
 
+    // Получение информации о герое
+    @Override
+    public String getInfo(){
+        return super.getInfo() + String.format("\u21F6 %-3d", arrows); // String.format("\u21F6%-3d");
+    }
+
     protected int getArrows() {
         return this.arrows;
     }
@@ -27,19 +33,19 @@ public abstract class ShooterClass extends BaseHero {
     public void step(ArrayList<BaseHero> teamArray) {
         if (hp<=0) Die();
         else if (arrows>0) {
-            System.out.printf("%s к выстрелу готов ! у меня %d стрел!\n", this.getName(), arrows);
+            System.out.printf("(%d) %s %s:\n>  К выстрелу готов ! у меня %d стрел\n", this.getTeam(), this.getClassName(), this.getName(), arrows);
             int opponentIndex = nearestIndexEnemy(teamArray);
             if (opponentIndex<0) this.setGameOver(team);
             else {
                 BaseHero opponent = teamArray.get(opponentIndex);
-                System.out.printf(">  Я выбрал цель! -> %s", opponent.getName());
+                System.out.printf(">  Я выбрал цель! -> %s %s", opponent.getClassName(), opponent.getName());
                 System.out.printf("  (расстояние до цели: %d)\n", (int)position.getDistance(opponent));
                 System.out.print(">  Выстрелил ! ");
                 this.attack(opponent);
                 int indexPeasant  = mineIndexPeasant(teamArray);
                 if (indexPeasant<0) {
                     arrows -= 1;
-                    System.out.println(">  У меня запас стрел уменьшился на одну...");
+                    System.out.println(">  Крестьян больше нет! Запас стрел пополнить не могу...");
                 }
                 opponentIndex = nearestIndexEnemy(teamArray);
                 if (opponentIndex<0) this.setGameOver(team);
@@ -60,7 +66,6 @@ public abstract class ShooterClass extends BaseHero {
             if (teamArray.get(i).getTeam() == team && teamArray.get(i).getClassName().equals("Крестьянин") && teamArray.get(i).getHp()>0)
                 return i;
         }
-        System.out.println(" ... т.к. все крестьяне убиты, запас стрел будет уменьшаться");
         return -1;
     }
 }

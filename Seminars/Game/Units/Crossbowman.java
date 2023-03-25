@@ -12,4 +12,9 @@ public class Crossbowman extends ShooterClass implements GameInterface{
     public String getClassName(){
         return "Арбалетчик";
     }
+
+    @Override
+    public String getCharName(){
+        return "A";
+    }
 }

@@ -12,4 +12,9 @@ public abstract class InfantryClass extends BaseHero {
                         String name, int x, int y) {
         super(hp, maxHp, speed, damage, damageMax, defence, attack, team, name, x, y);
     }
+
+    @Override
+    public String getInfo(){
+        return super.getInfo() + String.format("\t    ");
+    }
 }
