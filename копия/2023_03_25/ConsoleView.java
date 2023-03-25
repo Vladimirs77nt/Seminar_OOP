@@ -1,5 +1,6 @@
 package Seminars.Game;
 
+
 //import chars.HeroTeam;
 import Seminars.Game.Units.*;
 import java.util.Collections;
@@ -61,7 +62,7 @@ public class ConsoleView {
         for (int i = 0; i < Program.GANG_SIZE; i++) {
             if (Program.whiteSide.get(i).getPosition().isEquals(position))
             {
-                if(Program.whiteSide.get(i).getHp() == 0)
+                if(Program.whiteSide.get(i).hp == 0)
                     str ="|"+AnsiColors.ANSI_RED+Program.whiteSide.get(i).getCharName()+AnsiColors.ANSI_RESET;
                 else {
                     str ="|"+AnsiColors.ANSI_GREEN+Program.whiteSide.get(i).getCharName()+AnsiColors.ANSI_RESET;
@@ -70,7 +71,7 @@ public class ConsoleView {
             }
             if (Program.darkSide.get(i).getPosition().isEquals(position) && !alive)
             {
-                if(Program.darkSide.get(i).getHp() == 0)
+                if(Program.darkSide.get(i).hp == 0)
                     str ="|"+AnsiColors.ANSI_RED+ Program.darkSide.get(i).getCharName()+AnsiColors.ANSI_RESET;
                 else str ="|"+AnsiColors.ANSI_BLUE+ Program.darkSide.get(i).getCharName()+AnsiColors.ANSI_RESET;
             }
@@ -83,10 +84,10 @@ public class ConsoleView {
     {
         String str = "";
 
-        if(Program.whiteSide.get(npcIndex).getHp() == 0)
+        if(Program.whiteSide.get(npcIndex).hp == 0)
             str +="     " + AnsiColors.ANSI_RED+Program.whiteSide.get(npcIndex).getInfo()+AnsiColors.ANSI_RESET;
         else str +="     " + AnsiColors.ANSI_GREEN+Program.whiteSide.get(npcIndex).getInfo()+AnsiColors.ANSI_RESET;
-        if(Program.darkSide.get(npcIndex).getHp() == 0)
+        if(Program.darkSide.get(npcIndex).hp == 0)
             str +="     " + AnsiColors.ANSI_RED+Program.darkSide.get(npcIndex).getInfo()+AnsiColors.ANSI_RESET;
         else str +="     " + AnsiColors.ANSI_BLUE+Program.darkSide.get(npcIndex).getInfo()+AnsiColors.ANSI_RESET;
 

@@ -33,26 +33,26 @@ public abstract class ShooterClass extends BaseHero {
     public void step(ArrayList<BaseHero> teamArray) {
         if (hp<=0) hp = 0;
         else if (arrows>0) {
-            System.out.printf("(%d) %s %s:\n    > К выстрелу готов ! у меня %d стрел\n", this.getTeam(), this.getClassName(), this.getName(), arrows);
+            System.out.printf("(%d) %s %s:\n>  К выстрелу готов ! у меня %d стрел\n", this.getTeam(), this.getClassName(), this.getName(), arrows);
             int opponentIndex = nearestIndexEnemy(teamArray);
             if (opponentIndex<0) this.setGameOver(team);
             else {
                 BaseHero opponent = teamArray.get(opponentIndex);
-                System.out.printf("    > Я выбрал цель! -> %s %s", opponent.getClassName(), opponent.getName());
+                System.out.printf(">  Я выбрал цель! -> %s %s", opponent.getClassName(), opponent.getName());
                 System.out.printf("  (расстояние до цели: %d)\n", (int)position.getDistance(opponent));
-                System.out.print("    > Выстрелил ! ");
+                System.out.print(">  Выстрелил ! ");
                 this.attack(opponent);
                 int indexPeasant  = mineIndexPeasant(teamArray);
                 if (indexPeasant<0) {
                     arrows -= 1;
-                    System.out.println("    > у нас крестьян больше нет, запас стрел пополнить не могу...");
+                    System.out.println(">  Крестьян больше нет, запас стрел пополнить не могу...");
                 }
                 opponentIndex = nearestIndexEnemy(teamArray);
                 if (opponentIndex<0) this.setGameOver(team);
             }
         }
         else 
-            System.out.printf("(%d) %s %s:\n    > Стрелять не могу... У меня закончились стрелы!\n", this.getTeam(), this.getClassName(), this.getName());
+            System.out.printf("(%d) %s %s стрелять не могу... У меня закончились стрелы!\n", this.getTeam(), this.getClassName(), this.getName());
     }
 
     /**

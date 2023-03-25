@@ -37,7 +37,6 @@ public class Program {
     }
 
     // -----------------------------------------------------------------------------------
-    // ИНИЦИАЛИЗАЦИЯ ДВУХ КОМАНД
     public static void init(){
         whiteSide = new ArrayList<>();
         darkSide = new ArrayList<>();
@@ -63,15 +62,6 @@ public class Program {
                     break;
             }
         }
-        // сортировка команды
-        whiteSide.sort(new Comparator<BaseHero>() {
-            @Override
-            public int compare(BaseHero u1, BaseHero u2) {
-                if (u2.getSpeed() - u1.getSpeed() == 0)
-                    return (int)(u2.getHp() - (int)(u1.getHp()));
-                return (u2.getSpeed() - u1.getSpeed());
-            }
-        });
 
         // создаем команду №2 и выводим список в терминал
         for (int i = 0; i < 10; i++) {
@@ -90,15 +80,6 @@ public class Program {
                     break;
             }
         }
-        // сортировка команды
-        darkSide.sort(new Comparator<BaseHero>() {
-            @Override
-            public int compare(BaseHero u1, BaseHero u2) {
-                if (u2.getSpeed() - u1.getSpeed() == 0)
-                    return (int)(u2.getHp() - (int)(u1.getHp()));
-                return (u2.getSpeed() - u1.getSpeed());
-            }
-        });
 
         // создание ОБШЕЙ команды и сортировка ее по скорости героя
         allUnits.addAll(whiteSide);
@@ -113,23 +94,21 @@ public class Program {
         });
     }
 
-    // метод STEP для обеих команд
+    // метод STEP 
     private static void makeStep(){
-        BaseHero hero = whiteSide.get(0);
-        for (int i = 0; i < GANG_SIZE; i++) {
-            hero = whiteSide.get(i);
-            hero.step(allUnits);
-            if (hero.getGameOver() > 0) break;
-            hero = darkSide.get(i);
-            hero.step(allUnits);
-            if (hero.getGameOver() > 0) break;
-        }
-        if (hero.getGameOver() > 0){
-            GameOver = true;
-            if (hero.getGameOver() == 1)
-                System.out.println("\n  <<< Победила команда Green !!! >>>\n");
-            else
-                System.out.println("\n  <<< Победила команда Blue !!! >>>\n");
+        for (BaseHero hero : allUnits) {
+                hero.step(allUnits);
+                if (hero.getGameOver() > 0){
+                    GameOver = true;
+                    if (hero.getGameOver() == 1){
+                        System.out.println("\n  <<< Победила команда Green !!! >>>\n");
+                        break;
+                    }
+                    else {
+                        System.out.println("\n  <<< Победила команда Blue !!! >>>\n");
+                        break;
+                    }
+                }
         }
     }
 

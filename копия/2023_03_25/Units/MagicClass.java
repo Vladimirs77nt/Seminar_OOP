@@ -6,9 +6,7 @@
 
  package Seminars.Game.Units;
 
-import java.util.ArrayList;
-
-public abstract class MagicClass extends BaseHero{
+ public abstract class MagicClass extends BaseHero{
  
      protected int magicPower; // магическая сила персонажа
  
@@ -20,11 +18,6 @@ public abstract class MagicClass extends BaseHero{
 
      @Override
      public String getInfo(){
-        return super.getInfo() + String.format("\t    ");
-     }
-
-     @Override
-     public void step(ArrayList<BaseHero> teamArray) {
-        System.out.printf("(%d) %s %s:\n    > ничего не сделал, т.к. для него метод не реализован...\n", this.getTeam(), this.getClassName(), this.getName());
+         return super.getInfo() + String.format("\t    ");
      }
  }

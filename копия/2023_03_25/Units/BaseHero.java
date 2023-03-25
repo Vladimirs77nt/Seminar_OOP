@@ -9,7 +9,7 @@
 package Seminars.Game.Units;
 
 import java.util.ArrayList;
-import Seminars.Game.Program;
+import java.util.Random;
 
 public abstract class BaseHero {
 
@@ -20,7 +20,7 @@ public abstract class BaseHero {
     protected int id;       // - id номер героя
     protected int team;     // - номер команды героя
     protected int team_enemy;     // - номер команды ПРОТИВНИКОВ
-    protected float hp;       // - здоровье текущее
+    public float hp;       // - здоровье текущее
     protected float maxHp;    // - максимальный уровень здоровья
     protected int speed;    // - скорость передвижения
     protected int damage;   // - наносимый урон
@@ -54,7 +54,7 @@ public abstract class BaseHero {
         this.name = name;
         this.id = number;
         number++;
-        position = new Position(x, y);
+        this.position = new Position(x, y);
         if (team == 1) team_enemy = 2;
         else team_enemy = 1;
         gameover = 0;
@@ -80,7 +80,7 @@ public abstract class BaseHero {
         return hp;
     }
 
-    public String getCharName() {
+    public String getCharName(){
         return "";
     }
 
@@ -90,9 +90,7 @@ public abstract class BaseHero {
 
     // Получение информации о герое
     public String getInfo(){
-        String outStr = String.format("(%s) %-10s  ⚔️  %-3d \u26E8 %-3d \u26E8 %-3d%%  ☠️  %-3d", 
-                                        this.getCharName(), this.getClassName(), this.attaсk, defence,
-                                        (int)(hp * 100/maxHp), (damage + damageMax)/2);
+        String outStr = String.format("(%s) %-10s  ⚔️  %-3d \u26E8 %-3d \u26E8 %-3d%%  ☠️  %-3d", this.getCharName(), this.getClassName(), this.attaсk, defence, (int)(hp * 100/maxHp), (damage + damageMax)/2);
         return outStr;
     }
 
@@ -100,40 +98,17 @@ public abstract class BaseHero {
         return position;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
     public void setGameOver(int t) {
         gameover = t;
     }
 
-    /** абстрактный метод STEP для всех */
+    /** Метод STEP - базовый для всех */
     public void step(ArrayList<BaseHero> teamOpponent) {
         System.out.printf("(%d) %s выполнил STEP...\n", this.getTeam(), this.getClassName(), this.getName());
     }
 
-    //* Метод ПЕРЕДВИЖЕНИЯ к цели*/
-    public void move(BaseHero target) {
-        int[] dir = position.getDirection(target);
-        Position newPosition = new Position(this.getPosition().x+dir[0], this.getPosition().y+dir[1]);
-        //определяем клетку куда пойдем
-        boolean cage_empty = true; // считаем что клетка (куда пойдем) пустая
-        for (BaseHero hero : Program.allUnits) {
-            // проверям - герой есть на этой позиции? он живой?
-            if (hero.getPosition().isEquals(newPosition) && hero.getHp()>0) {
-                cage_empty = false; // клетка занята эивым героем !!!
-                break; // прервать перебор героев...
-            }
-        }
-        if (cage_empty) {
-            System.out.println("    > Клетка пустая - я иду на врага !");
-            this.setPosition(newPosition);
-        } else {
-            System.out.println("    > Клетка занята - идти не могу...");
-        }
-    }
 
+// ------------------- АТАКА и ПОЛУЧЕНИЕ DAMAGE ---------------------------
     /**
      * Метод АТАКА - нанесение повреждения персонажу target
      * @param target
@@ -168,6 +143,20 @@ public abstract class BaseHero {
     public void Die(){
         hp = 0;
         System.out.printf(" ----> %s %s убит !!! ...\n", this.getClassName(),this.getName());
+    }
+
+    /**
+     * Метод выбора СЛУЧАЙНОГО индекса оппонента из команды противника с HP больше нуля
+     * @param teamArray - ArrayList() список всех игроков, из всех команд
+     * @param team - номер команды противника
+     * @return - объект противник
+     */
+    protected int opponentRandomIndex(ArrayList<BaseHero> teamArray, int team){
+        int indexOpponent;
+        do {
+            indexOpponent = new Random().nextInt(teamArray.size());
+        } while ((teamArray.get(indexOpponent).getHp()<=0) || (teamArray.get(indexOpponent).getTeam() != team));
+        return indexOpponent;
     }
 
     /**

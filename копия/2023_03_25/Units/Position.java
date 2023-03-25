@@ -20,18 +20,4 @@ public class Position{
     public boolean isEquals(Position position){
         return (position.x == x && position.y == y);
     }
-
-    public int[] getDirection(BaseHero unit){
-        int dx = Math.abs(unit.position.x - x);
-        int dy = Math.abs(unit.position.y - y);
-        if (dx>=dy){
-            dx = (unit.position.x - x)/Math.abs(unit.position.x - x);
-            dy = 0;
-        } else {
-            dy = (unit.position.y - y)/Math.abs(unit.position.y - y);
-            dx = 0;
-        }
-        int [] dir = new int[] {dx, dy};
-        return dir;
-    }
 }

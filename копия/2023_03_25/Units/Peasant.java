@@ -2,8 +2,6 @@
 
 package Seminars.Game.Units;
 
-import java.util.ArrayList;
-
 public class Peasant extends BaseHero implements GameInterface{
 
     public Peasant(int team, String name, int x, int y) {
@@ -23,10 +21,5 @@ public class Peasant extends BaseHero implements GameInterface{
     @Override
     public String getInfo(){
         return super.getInfo() + String.format("\t    ");
-    }
-
-    @Override
-    public void step(ArrayList<BaseHero> teamOpponent) {
-        System.out.printf("(%d) %s %s:\n    > Готов принести стрелы!\n", this.getTeam(), this.getClassName(), this.getName());
     }
 }
