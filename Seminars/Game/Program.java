@@ -21,17 +21,17 @@ public class Program {
     public static void main(String[] args) {
 
         init();
+        System.out.println(" -- НАЧАЛО БОЯ ---");
+        ConsoleView.view();
 
         do {
-            ConsoleView.view();
-
-            makeStep();
-
             System.out.println();
             System.out.println("Нажмите кнопку Enter... (0 - завершение игры)");
             String str = iScanner.nextLine();
             if (str.equals("0"))
                 GameOver = true;
+            makeStep();
+            ConsoleView.view();
             
         } while (!GameOver);
 
@@ -101,12 +101,13 @@ public class Program {
         for (BaseHero hero : allUnits) {
                 hero.step(allUnits);
                 if (hero.getGameOver() > 0){
+                    GameOver = true;
                     if (hero.getGameOver() == 1){
-                        System.out.println("\n  <<< Победила команда Green !!! >>>");
-                    break;
+                        System.out.println("\n  <<< Победила команда Green !!! >>>\n");
+                        break;
                     }
                     else {
-                        System.out.println("\n  <<< Победила команда Blue !!! >>>");
+                        System.out.println("\n  <<< Победила команда Blue !!! >>>\n");
                         break;
                     }
                 }

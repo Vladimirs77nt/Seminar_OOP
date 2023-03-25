@@ -7,17 +7,22 @@ import java.util.Collections;
 
 public class ConsoleView {
 
-    private static int step = 0;
+    private static int step = -1;
     private static final String top10 = formatDiv("a") + String.join("", Collections.nCopies(9, formatDiv("-b"))) + formatDiv("-c");
     private static final String mid10 = formatDiv("d") + String.join("", Collections.nCopies(9, formatDiv("-e"))) + formatDiv("-f");
     private static final String bottom10 = formatDiv("g") + String.join("", Collections.nCopies(9, formatDiv("-h"))) + formatDiv("-i");
 
     public static void view(){
-        if (step++ == 0) {
+        if (step == 0) {
             System.out.print(AnsiColors.ANSI_RED+"First step!"+AnsiColors.ANSI_RESET);
+        } else if (step < 0) {
+            System.out.println();
         } else {
-            System.out.print(AnsiColors.ANSI_RED + "Step: "+step+AnsiColors.ANSI_RESET);
+            System.out.print(AnsiColors.ANSI_RED + "Step: "+(step+1)+AnsiColors.ANSI_RESET);
         }
+
+        step++;
+        System.out.println();
 
         System.out.print(AnsiColors.ANSI_GREEN +
                     String.join("", Collections.nCopies(20, formatDiv(" "))) + "Green Team" + AnsiColors.ANSI_RESET);
@@ -45,11 +50,11 @@ public class ConsoleView {
         System.out.println(PrintInfo(npcIndex));
         System.out.println(ConsoleView.bottom10);
         System.out.println();
-        System.out.println("Нажмите кнопку Enter...");
-        Program.iScanner.nextLine();
+        // System.out.println("Нажмите кнопку Enter...");
+        // Program.iScanner.nextLine();
     }
 
-    
+
     private static String getChar(Position position){
         String str = "| ";
         boolean alive = false;

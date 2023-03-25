@@ -31,7 +31,7 @@ public abstract class ShooterClass extends BaseHero {
     
     @Override
     public void step(ArrayList<BaseHero> teamArray) {
-        if (hp<=0) Die();
+        if (hp<=0) hp = 0;
         else if (arrows>0) {
             System.out.printf("(%d) %s %s:\n>  К выстрелу готов ! у меня %d стрел\n", this.getTeam(), this.getClassName(), this.getName(), arrows);
             int opponentIndex = nearestIndexEnemy(teamArray);
@@ -45,14 +45,14 @@ public abstract class ShooterClass extends BaseHero {
                 int indexPeasant  = mineIndexPeasant(teamArray);
                 if (indexPeasant<0) {
                     arrows -= 1;
-                    System.out.println(">  Крестьян больше нет! Запас стрел пополнить не могу...");
+                    System.out.println(">  Крестьян больше нет, запас стрел пополнить не могу...");
                 }
                 opponentIndex = nearestIndexEnemy(teamArray);
                 if (opponentIndex<0) this.setGameOver(team);
             }
         }
         else 
-            System.out.printf("%s стрелять не могу... У меня закончились стрелы!\n", this.getName());
+            System.out.printf("(%d) %s %s стрелять не могу... У меня закончились стрелы!\n", this.getTeam(), this.getClassName(), this.getName());
     }
 
     /**
