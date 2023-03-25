@@ -1,5 +1,7 @@
 package Seminars.Game.Units;
 
+import java.util.ArrayList;
+
 public class Position{
     protected int x, y;
 
@@ -33,5 +35,13 @@ public class Position{
         }
         int [] dir = new int[] {dx, dy};
         return dir;
+    }
+
+    public boolean chekPosition(Position position, ArrayList<BaseHero> teamArray){
+        for (BaseHero hero : teamArray) {
+            if (hero.getPosition().isEquals(position) && hero.getHp()>0)
+                return false;
+        }
+        return true;
     }
 }

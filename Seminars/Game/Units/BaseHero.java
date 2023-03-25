@@ -118,15 +118,7 @@ public abstract class BaseHero {
         int[] dir = position.getDirection(target);
         Position newPosition = new Position(this.getPosition().x+dir[0], this.getPosition().y+dir[1]);
         //определяем клетку куда пойдем
-        boolean cage_empty = true; // считаем что клетка (куда пойдем) пустая
-        for (BaseHero hero : Program.allUnits) {
-            // проверям - герой есть на этой позиции? он живой?
-            if (hero.getPosition().isEquals(newPosition) && hero.getHp()>0) {
-                cage_empty = false; // клетка занята эивым героем !!!
-                break; // прервать перебор героев...
-            }
-        }
-        if (cage_empty) {
+        if (newPosition.chekPosition(newPosition, Program.allUnits)) {
             System.out.println("    > Клетка пустая - я иду на врага !");
             this.setPosition(newPosition);
         } else {
