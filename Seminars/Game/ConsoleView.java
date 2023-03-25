@@ -13,19 +13,20 @@ public class ConsoleView {
     private static final String bottom10 = formatDiv("g") + String.join("", Collections.nCopies(9, formatDiv("-h"))) + formatDiv("-i");
 
     public static void view(){
+        System.out.println();
         if (step == 0) {
-            System.out.print(AnsiColors.ANSI_RED+"First step!"+AnsiColors.ANSI_RESET);
+            System.out.print(AnsiColors.ANSI_RED+"Итоги первого хода!"+AnsiColors.ANSI_RESET);
         } else if (step < 0) {
-            System.out.println();
+            System.out.println("Начальное состояние двух армий");
         } else {
-            System.out.print(AnsiColors.ANSI_RED + "Step: "+(step+1)+AnsiColors.ANSI_RESET);
+            System.out.print(AnsiColors.ANSI_RED + "Итоги хода № "+(step+1)+AnsiColors.ANSI_RESET);
         }
 
         step++;
         System.out.println();
 
         System.out.print(AnsiColors.ANSI_GREEN +
-                    String.join("", Collections.nCopies(20, formatDiv(" "))) + "Green Team" + AnsiColors.ANSI_RESET);
+                    String.join("", Collections.nCopies(30, formatDiv(" "))) + "Green Team" + AnsiColors.ANSI_RESET);
         System.out.println(AnsiColors.ANSI_BLUE +
                     String.join("", Collections.nCopies(43, formatDiv(" "))) + "Blue Team" + AnsiColors.ANSI_RESET);
 

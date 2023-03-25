@@ -2,12 +2,10 @@ package Seminars.Game;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 
 import Seminars.Game.Units.*;
-import Seminars.Game.ConsoleView;
 
 public class Program {
     public static final int GANG_SIZE = 10;
