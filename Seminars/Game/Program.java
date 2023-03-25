@@ -18,24 +18,25 @@ public class Program {
 
     public static void main(String[] args) {
 
-        init();
+        init();                             // инициализация двух команд
         System.out.println(" -- НАЧАЛО БОЯ ---");
-        ConsoleView.view();
+
+        ConsoleView.view();                 // вывести начальную граф/табличку состояния обеих команд
 
         do {
             System.out.println();
             System.out.println("Нажмите кнопку Enter... (0 - завершение игры)");
             String str = iScanner.nextLine();
             if (str.equals("0"))
-                GameOver = true;
-            makeStep();
-            ConsoleView.view();
-            
-        } while (!GameOver);
+                GameOver = true;            // если ввели 0 - то завершение игры
+            makeStep();                     // сделать STEP для всех юнитов
+            ConsoleView.view();             // вывести псевдографику
+        } while (!GameOver);                // завершить цикл если GameOver
 
         iScanner.close();
     }
 
+    
     // -----------------------------------------------------------------------------------
     // ИНИЦИАЛИЗАЦИЯ ДВУХ КОМАНД
     public static void init(){
