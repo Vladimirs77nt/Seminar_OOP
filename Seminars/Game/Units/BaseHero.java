@@ -80,6 +80,18 @@ public abstract class BaseHero {
         return hp;
     }
 
+    public void setHp(float currentHp) {
+        hp = currentHp;
+    }
+
+    protected float getHpMax() {
+        return maxHp;
+    }
+
+    protected int getId() {
+        return id;
+    }
+
     public String getCharName() {
         return "";
     }
@@ -178,5 +190,42 @@ public abstract class BaseHero {
                 }
         }    
         return indexEnemy;
+    }
+
+    /**
+     * Метод выбора индекса ближайшего коллеги из своей команды с HP больше нуля
+     * @param teamArray - ArrayList() список всех игроков, из всех команд
+     * @return - индекс противника (если вернется -1 - значит коллег больше нет!)
+     */
+    protected int nearestIndexFriend(ArrayList<BaseHero> teamArray){
+        float hpMin = 100;
+        int indexFriend = -1;
+        for (int i = 0; i < teamArray.size(); i++) {
+            if (teamArray.get(i).getTeam() != team_enemy &&
+                teamArray.get(i).getHp()>0 &&
+                teamArray.get(i).getId()!=this.getId())
+                if (teamArray.get(i).getHp()<hpMin){
+                    if (teamArray.get(i).getHp() < teamArray.get(i).getHpMax()) {
+                        hpMin = teamArray.get(i).getHp();
+                        indexFriend = i;
+                    }
+                }
+        }
+        return indexFriend;
+    }
+
+    /**
+     * Метод ЛЕЧЕНИЕ
+     * @param target
+     */
+    public void healing(BaseHero target) {
+        float causedDamage;
+        if (damage < target.defence) causedDamage = damage;
+        else if (damage > target.defence) causedDamage = damageMax;
+        else causedDamage = (this.damage + this.damageMax)/2;
+        if (position.getDistance(target)>5) causedDamage = causedDamage - damage/4;
+        else if (position.getDistance(target)<4) causedDamage = causedDamage + damage/2;
+        target.setHp(target.getHp() + causedDamage);
+        if (target.getHp()>target.getHpMax()) target.setHp(target.getHpMax());
     }
 }

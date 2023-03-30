@@ -25,6 +25,17 @@ public abstract class MagicClass extends BaseHero{
 
      @Override
      public void step(ArrayList<BaseHero> teamArray) {
-        System.out.printf("(%d) %s %s:\n    > ничего не сделал, т.к. для него метод не реализован...\n", this.getTeam(), this.getClassName(), this.getName());
+         if (hp<=0) hp = 0;
+         else {
+             System.out.printf("(%d) %s %s:\n    > готов помочь своей магической силой!\n", this.getTeam(), this.getClassName(), this.getName());
+             int friendIndex = nearestIndexFriend(teamArray);
+             if (friendIndex>=0) {
+                 BaseHero friend = teamArray.get(friendIndex);
+                 System.out.printf("    > Я выбрал кому помочь! -> %s %s\n", friend.getClassName(), friend.getName());
+                 System.out.print("    > Вызвал заклинание исцеления !\n");
+                 this.healing(friend);
+             }
+             else System.out.print("    > Мне исцелять некого...\n");
+         }
      }
  }
